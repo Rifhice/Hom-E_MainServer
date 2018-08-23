@@ -1,0 +1,125 @@
+{
+  "actuators": {
+    "123AZE": {
+      "name": "Living room",
+      "description": "Living room's lights",
+      "commands": {
+        "AZE123": {
+          "name": "Set light",
+          "key": "set",
+          "description": "....",
+          "command_arguments": [
+            { "type": "discrete", "possible_values": ["on", "off"] },
+            { "type": "continuous", "min": 0, "max": 100, "precision": 1 }
+          ]
+        }
+      },
+      "communication": {
+        "protocol": "internet",
+        "ip": "192.168.16.10",
+        "port": "1000"
+      }
+    }
+  },
+  "sensors": {
+    "456RTY": {
+      "name": "Presence detector",
+      "description": "Presence detector appartment",
+      "environment_variables": {
+        "RTY456": {
+          "name": "Presence",
+          "description": "....",
+          "unit": "N/A",
+          "value": {
+            "type": "discrete",
+            "possible_values": ["true", "false"],
+            "current_value": "false"
+          }
+        }
+      }
+    }
+  },
+  "behaviour": {
+    "UIO789": {
+      "evaluable": {
+        "type": "expression",
+        "evaluable": [
+          {
+            "type": "expression",
+            "evaluable": [
+              {
+                "type": "block",
+                "variable": "1",
+                "value": 30,
+                "valueType": "Double",
+                "operator": "=="
+              },
+              {
+                "type": "block",
+                "variable": "0",
+                "value": "Froid",
+                "valueType": "String",
+                "operator": "=="
+              }
+            ],
+            "operator": "&&"
+          },
+          {
+            "type": "block",
+            "variable": "2",
+            "value": 55,
+            "valueType": "Double",
+            "operator": "=="
+          }
+        ],
+        "operator": "||"
+      },
+      "command": {
+        "isComplex": 0,
+        "actuator": "AZE123",
+        "executable": "set on"
+      }
+    }
+  },
+  "commands": {
+    "AZE123": {
+      "actuator": "123AZE",
+      "name": "Set light",
+      "key": "set",
+      "description": "....",
+      "command_arguments": [
+        { "type": "discrete", "possible_values": ["on", "off"] },
+        { "type": "continuous", "min": 0, "max": 100, "precision": 1 }
+      ]
+    }
+  },
+  "environment_variables": {
+    "RTY456": {
+      "sensor": "456RTY",
+      "name": "Presence",
+      "description": "....",
+      "unit": "N/A",
+      "value": {
+        "type": "discrete",
+        "possible_values": ["true", "false"],
+        "current_value": "false"
+      }
+    }
+  },
+  "complex_commands": {
+    "QSD097": {
+      "name": "Lights",
+      "description": "Play with lamps",
+      "commands": [
+        {
+          "actuator": "AZE456",
+          "executable": "set on"
+        },
+        {
+          "actuator": "AZE123",
+          "executable": "set off"
+        }
+      ]
+    }
+  }
+}
