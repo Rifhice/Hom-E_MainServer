@@ -5,6 +5,7 @@ const Behavior = require("./Database/Collection/Behavior");
 const Environment_variable = require("./Database/Collection/Environment_variable");
 const ActuatorTCPServer = require("./ActuatorTCPServer");
 const SensorTCPServer = require("./SensorTCPServer");
+const SocketIO = require("./SocketIO");
 const bodyParser = require("body-parser");
 const app = express();
 const cors = require("cors");
@@ -12,6 +13,7 @@ const cors = require("cors");
 const REST_PORT = 1338;
 const ACTUATOR_TCP_PORT = 1337;
 const SENSOR_TCP_PORT = 1336;
+const SOCKET_IO_PORT = 1335;
 
 app.get("/", function(req, res) {
   res.send("Hi there !");
@@ -32,6 +34,9 @@ ActuatorTCPServer.listen(ACTUATOR_TCP_PORT, "0.0.0.0", () =>
 SensorTCPServer.listen(SENSOR_TCP_PORT, "0.0.0.0", () =>
   console.log("TCP sensor server listening on port " + SENSOR_TCP_PORT + " !")
 );
+
+SocketIO.listen(SOCKET_IO_PORT);
+console.log("Socket IO listening on port " + SOCKET_IO_PORT + " !");
 
 function checkFirebaseData(data) {
   if (data) {

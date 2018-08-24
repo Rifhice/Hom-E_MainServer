@@ -15,6 +15,7 @@
     "express": "^4.16.3",
     "firebase": "^5.3.1",
     "json-socket": "^0.3.0",
-    "node-web-bluetooth": "0.0.8"
+    "node-web-bluetooth": "0.0.8",
+    "socket.io": "^2.1.1"
   }
 }

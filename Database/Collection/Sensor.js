@@ -3,6 +3,9 @@ const collection = "sensors/";
 const Environment_variable = require("./Environment_variable");
 
 module.exports = {
+  listen_value: (callback, err) => {
+    return firebase.listen_value(collection, callback, err);
+  },
   listen: (callback, err) => {
     return firebase.listen_value(collection, callback, err);
   },

@@ -2,6 +2,9 @@ const firebase = require("../Firebase_CRUD");
 const collection = "commands/";
 
 module.exports = {
+  listen_value: (callback, err) => {
+    return firebase.listen_value(collection, callback, err);
+  },
   listen: (callback, err) => {
     return firebase.listen_value(collection, callback, err);
   },

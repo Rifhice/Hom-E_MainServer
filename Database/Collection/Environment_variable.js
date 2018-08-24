@@ -2,6 +2,9 @@ const firebase = require("../Firebase_CRUD");
 const collection = "environment_variables/";
 
 module.exports = {
+  listen_value: (callback, err) => {
+    return firebase.listen_value(collection, callback, err);
+  },
   listen_change: (callback, err) => {
     return firebase.listen_change(collection, callback, err);
   },

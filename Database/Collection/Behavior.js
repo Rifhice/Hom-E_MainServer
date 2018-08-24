@@ -76,6 +76,9 @@ function extractEnvironmentVariable(behavior) {
   return extractEnvironmentVariableFromEvaluableBis(behavior.evaluable, []);
 }
 module.exports = {
+  listen_value: (callback, err) => {
+    return firebase.listen_value(collection, callback, err);
+  },
   listen: (callback, err) => {
     return firebase.listen_value(collection, callback, err);
   },
