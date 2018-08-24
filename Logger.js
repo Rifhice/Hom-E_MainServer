@@ -1,4 +1,7 @@
 log = function(message) {
-  console.log("Logger => " + message);
+  var d = new Date();
+  var h = d.getHours();
+  var m = d.getMinutes();
+  console.log(`${h}:${m} --> ${message}`);
 };
 module.exports = log;
