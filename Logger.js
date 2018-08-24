@@ -1,4 +1,4 @@
 log = function(message) {
-  console.log(message);
+  console.log("Logger => " + message);
 };
 module.exports = log;

@@ -9,6 +9,7 @@ const SocketIO = require("./SocketIO");
 const bodyParser = require("body-parser");
 const app = express();
 const cors = require("cors");
+const Logger = require("./Logger");
 
 const REST_PORT = 1338;
 const ACTUATOR_TCP_PORT = 1337;
@@ -24,19 +25,17 @@ app.use(bodyParser.json());
 app.use("/", require("./router.js"));
 
 app.listen(REST_PORT, "0.0.0.0", function() {
-  console.log("Example app listening on port " + REST_PORT + " !");
+  Logger("Example app listening on port " + REST_PORT + " !");
 });
 ActuatorTCPServer.listen(ACTUATOR_TCP_PORT, "0.0.0.0", () =>
-  console.log(
-    "TCP actuator server listening on port " + ACTUATOR_TCP_PORT + " !"
-  )
+  Logger("TCP actuator server listening on port " + ACTUATOR_TCP_PORT + " !")
 );
 SensorTCPServer.listen(SENSOR_TCP_PORT, "0.0.0.0", () =>
-  console.log("TCP sensor server listening on port " + SENSOR_TCP_PORT + " !")
+  Logger("TCP sensor server listening on port " + SENSOR_TCP_PORT + " !")
 );
 
 SocketIO.listen(SOCKET_IO_PORT);
-console.log("Socket IO listening on port " + SOCKET_IO_PORT + " !");
+Logger("Socket IO listening on port " + SOCKET_IO_PORT + " !");
 
 function checkFirebaseData(data) {
   if (data) {
@@ -50,7 +49,7 @@ function checkFirebaseData(data) {
 
 Environment_variable.listen_change(data => {
   if ((value = checkFirebaseData(data))) {
-    console.log(`A variable has been updated !`);
+    Logger(`A variable has been updated !`);
     let behaviors = value.behaviors;
     if (behaviors) {
       for (id of behaviors) {

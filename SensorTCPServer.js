@@ -1,14 +1,14 @@
 var net = require("net");
 var JsonSocket = require("json-socket");
 const Sensor = require("./Database/Collection/Sensor");
-
+const Logger = require("./Logger");
 var server = net.createServer();
 
 var clients = [];
 
 server.on("connection", function(socket) {
   socket = new JsonSocket(socket);
-  console.log("New Sensor connected !");
+  Logger("New Sensor connected !");
   socket.on("message", function(message) {
     if (message) {
       switch (message.action) {
@@ -22,7 +22,7 @@ server.on("connection", function(socket) {
                 result: "success",
                 id: data[0]
               });
-              console.log("Sensor " + data[0] + " succesfully registered !");
+              Logger("Sensor " + data[0] + " succesfully registered !");
             })
             .catch(err => {
               console.log(err);
@@ -41,9 +41,7 @@ server.on("connection", function(socket) {
                     result: "success",
                     id: data[0]
                   });
-                  console.log(
-                    "Sensor " + data[0] + " succesfully registered !"
-                  );
+                  Logger("Sensor " + data[0] + " succesfully registered !");
                 })
                 .catch(err => {
                   console.log(err);
@@ -56,7 +54,7 @@ server.on("connection", function(socket) {
                     action: "connection",
                     result: "success"
                   });
-                  console.log(
+                  Logger(
                     "Sensor " + message.data[0] + " succesfully connected !"
                   );
                 })
@@ -69,7 +67,7 @@ server.on("connection", function(socket) {
           let variable = message.data.variable;
           let value = message.data.value;
           Sensor.updateVariable(sensor, variable, value).then(data => {
-            console.log("Updated !");
+            Logger("Updated !");
           });
           break;
         default:
@@ -86,7 +84,7 @@ server.on("connection", function(socket) {
       let actuator = data[1];
       actuator.isConnected = false;
       Sensor.update(id, actuator);
-      console.log("Sensor " + id + " just disconnected");
+      Logger("Sensor " + id + " just disconnected");
     }
   });
 });

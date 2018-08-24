@@ -5,11 +5,11 @@ const Sensor = require("./Database/Collection/Sensor");
 const Environment_variable = require("./Database/Collection/Environment_variable");
 const Command = require("./Database/Collection/Command");
 const Behavior = require("./Database/Collection/Behavior");
-
+const Logger = require("./Logger");
 io.on("connection", function(client) {
-  console.log("New UI connected");
+  Logger("New UI connected");
   client.on("disconnect", function() {
-    console.log("UI disconnected");
+    Logger("UI disconnected");
   });
   client.on("register action_queue", function(msg) {
     Action_queue.listen_value(data => {

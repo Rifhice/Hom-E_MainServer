@@ -104,7 +104,7 @@ server.on("connection", function(socket) {
                     action: "connection",
                     result: "success"
                   });
-                  console.log(
+                  Logger(
                     "Actuator " + message.data[0] + " succesfully connected !"
                   );
                   checkAllAction();
@@ -125,7 +125,7 @@ server.on("connection", function(socket) {
                 result: "success"
               });
             });
-            console.log("Actuator " + id + " just disconnected");
+            Logger("Actuator " + id + " just disconnected");
           }
           break;
         default:
@@ -142,7 +142,7 @@ server.on("connection", function(socket) {
       let actuator = data[1];
       actuator.isConnected = false;
       Actuator.update(id, actuator);
-      console.log("Actuator " + id + " just disconnected");
+      Logger("Actuator " + id + " just disconnected");
     }
   });
 });

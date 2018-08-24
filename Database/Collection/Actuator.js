@@ -33,14 +33,5 @@ module.exports = {
   },
   remove: (actuatorId, callback) => {
     return firebase.remove(collection, actuatorId, callback);
-  },
-  isConnected: actuator => {
-    firebase.get(collection, actuator, data => {
-      console.log(data.val());
-    });
-    return true;
-  },
-  execute: executable => {
-    console.log("Execute => " + executable);
   }
 };
