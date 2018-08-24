@@ -2,13 +2,14 @@ var net = require("net");
 var JsonSocket = require("json-socket");
 const Actuator = require("./Database/Collection/Actuator");
 const Action_queue = require("./Database/Collection/Action_queue");
+const Logger = require("./Logger");
 
 var server = net.createServer();
 
 var clients = [];
 
 function checkAllAction() {
-  console.log("Checking all the existing actions !");
+  Logger("Checking all the existing actions !");
   Action_queue.getAll(data => {
     if (data) {
       const actions = data.val();
@@ -42,12 +43,12 @@ function executeAction(actuatorId, actionKey, action) {
               data.commands[action.command].command_arguments[i].current = arg;
             });
             Actuator.update(actuatorId, data);
-            console.log(`Action ${actionKey} execution sent.`);
+            Logger(`Action ${actionKey} execution sent.`);
             Action_queue.remove(actionKey);
           }
         }
       } else {
-        console.log("The actuator is unreachable !");
+        Logger("The actuator is unreachable !");
       }
     }
   });
@@ -55,7 +56,7 @@ function executeAction(actuatorId, actionKey, action) {
 
 server.on("connection", function(socket) {
   socket = new JsonSocket(socket);
-  console.log("New actuator connected !");
+  Logger("New actuator connected !");
   socket.on("message", function(message) {
     if (message) {
       switch (message.action) {
@@ -69,7 +70,7 @@ server.on("connection", function(socket) {
                 result: "success",
                 id: data[0]
               });
-              console.log("Actuator " + data[0] + " succesfully registered !");
+              Logger("Actuator " + data[0] + " succesfully registered !");
               checkAllAction();
             })
             .catch(err => {
@@ -89,9 +90,7 @@ server.on("connection", function(socket) {
                     result: "success",
                     id: data[0]
                   });
-                  console.log(
-                    "Actuator " + data[0] + " succesfully registered !"
-                  );
+                  Logger("Actuator " + data[0] + " succesfully registered !");
                   checkAllAction();
                 })
                 .catch(err => {
