@@ -10,11 +10,11 @@ const bodyParser = require("body-parser");
 const app = express();
 const cors = require("cors");
 const Logger = require("./Logger");
-
-const REST_PORT = 1338;
-const ACTUATOR_TCP_PORT = 1337;
-const SENSOR_TCP_PORT = 1336;
-const SOCKET_IO_PORT = 1335;
+const cfg = require("./config.json");
+const REST_PORT = cfg.REST_PORT;
+const ACTUATOR_TCP_PORT = cfg.ACTUATOR_TCP_PORT;
+const SENSOR_TCP_PORT = cfg.SENSOR_TCP_PORT;
+const SOCKET_IO_PORT = cfg.SOCKET_IO_PORT;
 
 app.get("/", function(req, res) {
   res.send("Hi there !");

@@ -35,16 +35,17 @@ function executeAction(actuatorId, actionKey, action) {
               data.commands[action.command].key +
               " " +
               action.arguments.join(" ");
-            client[2].sendMessage({
-              action: "execute",
-              executable: mess
-            });
             action.arguments.forEach((arg, i) => {
               data.commands[action.command].command_arguments[i].current = arg;
             });
-            Actuator.update(actuatorId, data);
+            client[2].sendMessage({
+              action: "execute",
+              executable: mess,
+              actuatorId: actuatorId,
+              data: data,
+              actionKey: actionKey
+            });
             Logger(`Action ${actionKey} execution sent.`);
-            Action_queue.remove(actionKey);
           }
         }
       } else {
@@ -126,6 +127,14 @@ server.on("connection", function(socket) {
               });
             });
             Logger("Actuator " + id + " just disconnected");
+          }
+          break;
+        case "execute":
+          if (message.result === "success") {
+            Actuator.update(message.actuatorId, message.data);
+            Action_queue.remove(message.actionKey);
+          } else {
+            Logger("Error while executing an action !");
           }
           break;
         default:
