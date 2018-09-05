@@ -86,7 +86,6 @@ server.on("connection", function(socket) {
               Actuator.write(message.data[1])
                 .then(data => {
                   clients.push([data[0], message.data, socket]);
-                  console.log(clients);
                   socket.sendMessage({
                     action: "registration",
                     result: "success",
@@ -102,7 +101,6 @@ server.on("connection", function(socket) {
               Actuator.update(id, message.data[1])
                 .then(data => {
                   clients.push([message.data[0], message.data[1], socket]);
-                  console.log(clients);
                   socket.sendMessage({
                     action: "connection",
                     result: "success"
