@@ -27,7 +27,6 @@ function executeAction(actuatorId, actionKey, action) {
   Actuator.get(actuatorId, data => {
     if (data) {
       data = data.val();
-      Logger(data);
       if (data && data.isConnected) {
         for (let clientKey in clients) {
           client = clients[clientKey];
@@ -66,7 +65,7 @@ server.on("connection", function(socket) {
           message.data.isConnected = true;
           Actuator.write(message.data)
             .then(data => {
-              clients[socket] = [data[0], message.data, socket];
+              clients.push([data[0], message.data, socket]);
               socket.sendMessage({
                 action: "registration",
                 result: "success",
@@ -86,7 +85,8 @@ server.on("connection", function(socket) {
             if (!data.val()) {
               Actuator.write(message.data[1])
                 .then(data => {
-                  clients[socket] = [data[0], message.data, socket];
+                  clients.push([data[0], message.data, socket]);
+                  console.log(clients);
                   socket.sendMessage({
                     action: "registration",
                     result: "success",
@@ -101,7 +101,8 @@ server.on("connection", function(socket) {
             } else {
               Actuator.update(id, message.data[1])
                 .then(data => {
-                  clients[socket] = [message.data[0], message.data[1], socket];
+                  clients.push([message.data[0], message.data[1], socket]);
+                  console.log(clients);
                   socket.sendMessage({
                     action: "connection",
                     result: "success"
