@@ -27,6 +27,7 @@ function executeAction(actuatorId, actionKey, action) {
   Actuator.get(actuatorId, data => {
     if (data) {
       data = data.val();
+      Logger(data);
       if (data && data.isConnected) {
         for (let clientKey in clients) {
           client = clients[clientKey];
